@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/company.css">
+    <script type="application/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <title>companyList</title>
+</head>
+<body>
+<!--=========面包屑导航==========-->
+<header class="container-fluid frame">
+    <div class="row">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="">首页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="">商品管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><a href="">商品列表</a></li>
+        </ul>
+        <!--<div class="col-xs-1">退出</div>-->
+    </div>
+</header>
+<!--=========section==========-->
+<section>
+    <div class="container-fluid">
+        <!--=========查询条件==========-->
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-inline cyForm">
+                    <div class="form-group">
+                        <label for="companyName">公司名称:</label>
+                        <select name="companyName" id="companyName" class="form-control" >
+                            <option value="0">全部</option>
+                            <% company.forEach(function(item){%>
+                            <option value="<%=item.c_id%>"><%=item.c_name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="compPeople">负责人:</label>
+                        <input type="text" id="compPeople" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="peoplePhone">负责人电话:</label>
+                        <input type="text" id="peoplePhone" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="compPhone">公司电话:</label>
+                        <input type="text" id="compPhone" class="form-control" />
+                    </div>
+                    <button type="button" class="btn btn-success cx" id="searchBtn">查询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--=========新增数据==========-->
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:" class="btn btn-danger radius"><i class="fa fa-trash"></i> 批量删除</a>
+                <a href="javascript:"  class="btn btn-primary radius" id="addBtn"><i class="fa fa-plus"></i> 添加公司</a>
+            </span>
+            <span class="r">共有数据：<strong id="totalCount"><%=totalPage%></strong> 条</span>
+        </div>
+    <!--&lt;!&ndash;=========显示多少条==========&ndash;&gt;-->
+    <!--<div class="dataTables_length" id="DataTables_Table_0_length">-->
+        <!--<label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select">-->
+            <!--<option value="10">5</option>-->
+            <!--<option value="25">10</option>-->
+            <!--<option value="50">15</option>-->
+            <!--<option value="100">20</option>-->
+        <!--</select> 条</label>-->
+    <!--</div>-->
+    <!--=========表格部分==========-->
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <table  class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" ></th>
+                        <th>ID</th>
+                        <th>公司名称</th>
+                        <th>公司地址</th>
+                        <th>公司负责人</th>
+                        <th>负责人电话</th>
+                        <th>公司电话</th>
+                        <th>公司创立时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tableList">
+                <%for(var i=0;i < data.length;i++){%>
+                <tr class="text-c">
+                    <td><input type="checkbox" ></td>
+                    <td><%=data[i].c_id%></td>
+                    <td><%=data[i].c_name%></td>
+                    <td><%=data[i].c_address%></td>
+                    <td><%=data[i].c_contacts%></td>
+                    <td><%=data[i].c_contactsTel%></td>
+                    <td><%=data[i].c_tel%></td>
+                    <td><%=(data[i].create_time).getFullYear()+"-"+(data[i].create_time).getMonth()+"-"+(data[i].create_time).getDate()%></td>
+                    <td><%=data[i].state%></td>
+                    <td><span title='切换状态' class='del  fa fa-refresh' sid="<%=data[i].c_id%>"></span > &nbsp; <span  title='修改' class='upd fa fa-edit' sid="<%=data[i].c_id%>" ></span></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--=========下方翻页==========-->
+    <nav class="container cyNav" aria-label="Page navigation">
+        <ul class="pagination">
+            <%if(br-1<=0){%>
+            <%br=1%>
+            <li id="prevPage"><a href="<%=br%>">&laquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1%>">&laquo;</a></li>
+            <%}%>
+            <%for(var j=1;j<=totalPage;j++){%>
+            <li id="page"><a href="<%=j%>"><%=j%></a></li>
+            <%}%>
+            <%if((br-1+2)>totalPage){%>
+            <%br=totalPage%>
+            <li id="nextPage"><a href="<%=br%>"> &raquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1+2%>"> &raquo;</a></li>
+            <%}%>
+        </ul>
+    </nav>
+    <!-- 弹出修改信息的模态框-->
+    <div class="modal fade container-fluid" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-inline change-box">
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comName">公司名称：</label>
+                            <input type="text"  class="form-control col-xs-6 col-sm-7" id="comName"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comAddress">公司地址：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="comAddress"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPeo">公司负责人：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="comPeo"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPeoPhone">公司负责人电话：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="comPeoPhone"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPone">公司电话：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="comPone"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no "  data-dismiss="modal" id="myBtn2">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出新增信息的模态框-->
+    <div class="modal fade container-fluid" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 400px;">
+                <div class="modal-body">
+                    <form action="" class="form-inline change-box">
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comName">公司名称：</label>
+                            <input type="text"  class="form-control col-xs-6 col-sm-7" id="compName"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comAddress">公司地址：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="compAddress"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPeo">公司负责人：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="compPeo"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPeoPhone">公司负责人电话：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="compPeoPhone"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comPone">公司电话：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="comPhone"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comDate">创建时间：</label>
+                            <input type="date" class="form-control col-xs-6 col-sm-7" id="comDate"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure btn-success" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no btn-danger" data-dismiss="modal" id="myBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出删除确认模态框-->
+    <div class="modal fade modal-del" id="delRole" data-keyboard="true" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    您是否需要删除数据？
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-no btn-success" data-dismiss="modal">取消</button>
+                    <button class="btn btn-sure btn-danger" type="button" id="btnDel" onclick="deleteCompany(this)" data-dismiss="modal">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script type="application/javascript" src="/Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+    <script src="/js/company.js"></script>
+    <script src="/js/ajax.js"></script>
+</body>
+</html>

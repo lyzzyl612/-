@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/brand.css">
+    <script type="application/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <title>brandList</title>
+</head>
+<body>
+<!--=========面包屑导航==========-->
+<header class="container-fluid frame">
+    <div class="row">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="">首页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="">品牌管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><a href="">品牌列表</a></li>
+        </ul>
+        <!--<div class="col-xs-1">退出</div>-->
+    </div>
+</header>
+<!--=========section==========-->
+<section>
+    <div class="container-fluid">
+        <!--=========查询条件==========-->
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-inline cyForm">
+                    <div class="form-group">
+                        <label for="brandCompany">品牌所属公司:</label>
+                        <select type="text" name="brandCompany" id="brandCompany" class="form-control">
+                            <option value="0">全部</option>
+                            <% company.forEach(function(item){%>
+                            <option value="<%=item.c_id%>"><%=item.c_name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="brandCompany">品牌名称:</label>
+                        <select name="brandName" id="brandName" class="form-control">
+                            <option value="0">全部</option>
+                            <% brandList.forEach(function(item){%>
+                            <option value="<%=item.b_id%>"><%=item.b_name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success cx" id="searchBtn">查询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--=========新增数据==========-->
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:" class="btn btn-danger radius"><i class="fa fa-trash"></i> 批量删除</a>
+                <a href="javascript:"  class="btn btn-primary radius" id="addBtn"><i class="fa fa-plus"></i> 添加品牌</a>
+            </span>
+        <span class="r">共有数据：<strong id="totalCount"><%=totalCount%></strong>条</span>
+    </div>
+    <!--=========表格部分==========-->
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <table  class="table table-striped">
+                <thead>
+                <tr class="text-c">
+                    <th><input type="checkbox" id="checkBrand" onclick="check1()"></th>
+                    <td>ID</td>
+                    <td>品牌所属公司</td>
+                    <td>品牌名称</td>
+                    <td>LOGO</td>
+                    <td>品牌创建时间</td>
+                    <td>品牌故事</td>
+                    <td>品牌简介</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody id="tableList">
+                <%for(var i=0;i < data.length;i++){%>
+                <tr class="text-c">
+                    <td><input type="checkbox" class="tableCheck"></td>
+                    <td><%=data[i].b_id%></td>
+                    <td><%=data[i].c_name%></td>
+                    <td><%=data[i].b_name%></td>
+                    <td><img src="<%=data[i].b_logo%>" alt=""/></td>
+                    <td><%=data[i].b_create_time%></td>
+                    <td class="brandStory"  sid="<%=data[i].b_id%>"><%=data[i].b_story%></td>
+                    <td class="brandDesc content_txt" sid="<%=data[i].b_id%>"><%=data[i].b_desc%></td>
+                    <td><span title='删除数据' class="del fa fa-refresh" sid="<%=data[i].b_id%>"></span > &nbsp; <span title='修改' class="upd fa fa-edit" sid="<%=data[i].b_id%>"></span></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--=========下方翻页==========-->
+    <nav class="container cyNav" aria-label="Page navigation">
+        <ul class="pagination" id="myPage">
+            <%if(br-1<=0){%>
+            <%br=1%>
+            <li><a href="<%=br%>">&laquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1%>">&laquo;</a></li>
+            <%}%>
+            <%for(var j=1;j<=totalPage;j++){%>
+            <li><a href="<%=j%>"><%=j%></a></li>
+            <%}%>
+            <%if((br-1+2)>totalPage){%>
+            <%br=totalPage%>
+            <li><a href="<%=br%>"> &raquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1+2%>"> &raquo;</a></li>
+            <%}%>
+        </ul>
+    </nav>
+    <!-- 弹出修改信息的模态框-->
+    <div class="modal fade container-fluid" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 500px;">
+                <div>
+                    <form action="/goodsImgUpload.do" enctype="multipart/form-data" id="updateForm" class="form-inline change-box">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" class="form-inline change-box">
+                                <div>
+                                    <label class="form-label text-right col-xs-4 col-sm-2">品牌名称：</label>
+                                    <input type="text"  class="form-control col-xs-6 col-sm-7" id="braName"/>
+                                </div>
+                                <div>
+                                    <label class="form-label text-right col-xs-4 col-sm-2">品牌创建时间：</label>
+                                    <input type="date" class="form-control col-xs-6 col-sm-7" id="storyTime"/>
+                                </div>
+                                <div>
+                                    <label class="form-label text-right col-xs-4 col-sm-2">品牌故事标题：</label>
+                                    <input type="text" class="form-control col-xs-6 col-sm-7" id="storyTitle"/>
+                                </div>
+                                <div>
+                                    <label class="form-label text-right col-xs-4 col-sm-2">品牌简介：</label>
+                                    <textarea  id="storyUpdateDesc" type="text" class="form-control col-xs-6 col-sm-7" cols="30" rows="4"></textarea>
+                                </div>
+                                <div id="lastUp">
+                                    <label class="form-label text-right col-xs-4 col-sm-2">品牌LOGO：</label>
+                                    <input type="file" class="btn" id="UpdateImg" name="minimg" />
+                                    <img src="" alt="" id="storyUpImg"/>
+                                </div>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtn2">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出新增信息的模态框-->
+    <div class="modal fade container-fluid" id="addBrand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 500px;">
+                <div class="modal-body">
+                    <form action="/goodsImgUpload.do" enctype="multipart/form-data" id="addForm" class="form-inline change-box">
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="branCompany">品牌所属公司：</label>
+                            <select type="text" name="brandCompany" id="branCompany" class="form-control">
+                                <option value="0">全部</option>
+                                <% company.forEach(function(item){%>
+                                <option value="<%=item.c_id%>"><%=item.c_name%></option>
+                                <%})%>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="branName">品牌名称：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="branName"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="comDate">品牌创建时间：</label>
+                            <input type="date" class="form-control col-xs-6 col-sm-7" id="comDate"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" >品牌故事标题：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="branStory"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">品牌简介：</label>
+                            <textarea  id="storyAddDesc" type="text" class="form-control col-xs-6 col-sm-7" cols="30" rows="4"></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">品牌LOGO：</label>
+                            <input type="file" class="btn" id="ADDImg" name="minimg" />
+                            <img src="" alt="" id="branImg"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出删除确认模态框-->
+    <div class="modal fade modal-del" id="delRole" data-keyboard="true" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    您是否需要删除数据？
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sure" type="button" id="btnDel" onclick="deleteBrand(this)" data-dismiss="modal">确认</button>
+                    <button class="btn btn-no" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出品牌故事的模态框-->
+    <div class="modal fade container-fluid" id="brandStory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 1750px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">品牌故事</h4>
+                </div>
+                <div id="storyIndex"></div>
+                <div class="modal-body" id="listStory">
+
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="storyAdd">新增</button>
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="storyDelete">删除</button>
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="storyUpdate">修改</button>
+                    <button type="button"  class="btn btn1 btn-no " data-dismiss="modal" id="myBtn3">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出新增品牌故事的模态框-->
+    <div class="modal fade container-fluid" id="addStory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 650px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">故事内容</h4>
+                </div>
+                <form action="/goodsImgUpload.do" enctype="multipart/form-data" id="addStoryForm" class="form-inline change-box">
+                    <label class="form-label text-right col-xs-4 col-sm-2">品牌故事封面背景图片：</label>
+                    <input type="file" class="btn" id="storyAddImg" name="minimg" />
+                    <img src="" alt="" id="addStoryImg"/>
+                    <textarea name="txtContent" id="addTxtContent" class="form-control"></textarea>
+                </form>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtnAdd">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出修改品牌故事的模态框-->
+    <div class="modal fade container-fluid" id="updateStory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 800px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">品牌故事</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/goodsImgUpload.do" enctype="multipart/form-data" id="upForm" class="form-inline change-box">
+                        <div id="storyUp">
+                            <label class="form-label text-right col-xs-4 col-sm-2">品牌故事封面背景图片：</label>
+                            <input type="file" class="btn" id="UpdateImgBtn" name="minimg" />
+                            <img src="" alt="" id="storyUpdateImg"/>
+                        </div>
+                        <textarea name="txtContent" id="upTxtContent" class="form-control"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-no "  data-dismiss="modal" id="cancelUpdate">取消</button>
+                    <button type="button" class="btn btn-sure" data-dismiss="modal" id="saveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/jquery-3.2.1.js"></script>
+<script type="application/javascript" src="/Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+<script charset="utf-8" src="/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="/kindeditor/lang/zh_CN.js"></script>
+<script src="/js/ajax.js"></script>
+<script src="/js/brand.js"></script>
+</body>
+</html>

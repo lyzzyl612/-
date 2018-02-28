@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/fashion.css">
+    <script type="application/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <title>fashionList</title>
+    <style>
+        .form-group{
+            width: 30%;
+        }
+        .form-label{
+            width: 40%;
+            margin-left: -70px;
+        }
+    </style>
+</head>
+<body>
+<!--=========面包屑导航==========-->
+<header class="container-fluid frame">
+    <div class="row">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="">首页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="">资讯管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><a href="">街拍文章</a></li>
+        </ul>
+        <!--<div class="col-xs-1">退出</div>-->
+    </div>
+</header>
+<!--=========section==========-->
+<section>
+    <div class="container-fluid">
+        <!--=========查询条件==========-->
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-inline cyForm">
+                    <div class="form-group">
+                        <label class="form-label text-right col-xs-4 col-sm-2 cha">关键字：</label>
+                        <input type="text"  class="form-control col-xs-6 col-sm-7" id="Keywords"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label text-right col-xs-4 col-sm-2 cha">文章标题：</label>
+                        <input type="text"  class="form-control col-xs-6 col-sm-7" id="articleName"/>
+                    </div>
+                    <button type="button" class="btn btn-success cx" id="searchBtn">查询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--=========新增数据==========-->
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:" class="btn btn-danger radius"><i class="fa fa-trash"></i> 批量删除</a>
+                <a href="javascript:"  class="btn btn-primary radius" id="addBtn"><i class="fa fa-plus"></i> 添加资讯</a>
+            </span>
+        <span class="r">共有数据：<strong id="totalCount"><%=totalCount%></strong>条</span>
+    </div>
+    <!--=========表格部分==========-->
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <table  class="table table-striped">
+                <thead>
+                    <tr class="text-c">
+                        <th><input type="checkbox" id="checkBrand" onclick="check1()"></th>
+                        <td>ID</td>
+                        <td>关键字</td>
+                        <td>文章标题</td>
+                        <td>封面图片</td>
+                        <td style="width:100px;">创建时间</td>
+                        <td>状态</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody id="tableList">
+                    <%for(var i=0;i < data.length;i++){%>
+                    <tr class="text-c">
+                        <td><input type="checkbox" class="tableCheck"></td>
+                        <td><%=data[i].f_id%></td>
+                        <td><%=data[i].f_Keywords%></td>
+                        <td class="fashionTitle" title='查看文章'><%=data[i].f_title%></td>
+                        <td><img src="<%=data[i].f_img%>" alt=""/></td>
+                        <td><%=data[i].f_time%></td>
+                        <td>
+                            <%if(data[i].f_index==1){%>
+                            <span class="label label-success radius faBu">已发布</span>
+                            <%}else{%>
+                            <span class="label label-default radius faBu">未发布</span>
+                            <%}%>
+                        </td>
+                        <td><span title='切换状态' state='<%=data[i].f_index%>' class="del fa fa-refresh" sid="<%=data[i].f_id%>"></span > &nbsp; <span title='修改' class="upd fa fa-edit" sid="<%=data[i].f_id%>"></span></td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--=========下方翻页==========-->
+    <nav class="container cyNav" aria-label="Page navigation">
+        <ul class="pagination" id="myPage">
+            <%if(br-1<=0){%>
+            <%br=1%>
+            <li><a href="<%=br%>">&laquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1%>">&laquo;</a></li>
+            <%}%>
+            <%for(var j=1;j<=totalPage;j++){%>
+            <li><a href="<%=j%>"><%=j%></a></li>
+            <%}%>
+            <%if((br-1+2)>totalPage){%>
+            <%br=totalPage%>
+            <li><a href="<%=br%>"> &raquo;</a></li>
+            <%}else{%>
+            <li><a href="<%=br-1+2%>"> &raquo;</a></li>
+            <%}%>
+        </ul>
+    </nav>
+    <!-- 弹出修改信息的模态框-->
+    <div class="modal fade container-fluid" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-inline change-box" id="upForm">
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">关键字：</label>
+                            <input type="text"  class="form-control col-xs-6 col-sm-7" id="keyTit"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">文章标题：</label>
+                            <textarea id="fashionTit" type="text" class="form-control col-xs-6 col-sm-7" cols="30" rows="4"></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">封面图片：</label>
+                            <input type="file" class="btn"  id="upStoryImg" name="minimg" />
+                            <img src="" alt="" id="storyImg"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtn2">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出新增信息的模态框-->
+    <div class="modal fade container-fluid" id="addBrand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 300px;">
+                <div class="modal-body">
+                    <form action="" class="form-inline change-box" id="addForm">
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">关键字：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="fashionName"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">文章标题：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="fashionTil"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">封面图片：</label>
+                            <input type="file"  class="btn"  id="upAddImg" name="minimg" />
+                            <img src="" alt="" id="storyAddImg" style="display: none"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2">文章内容：</label>
+                            <input type="text" placeholder="点击添加内容" class="btn" id="addTit"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出文章内容的模态框-->
+    <div class="modal fade container-fluid" id="fashionTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content" style="width: 800px;height: 900px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">文章内容</h4>
+                </div>
+                <div class="modal-body" id="listStory">
+
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="fashionAdd">新增</button>
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="fashionDelete">删除</button>
+                    <button type="button"  class="btn btn1" data-dismiss="modal" id="fashionUpdate">修改</button>
+                    <button type="button"  class="btn btn1 btn-no " data-dismiss="modal" id="myBtn3">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出修改文章内容的模态框-->
+    <div class="modal fade container-fluid" id="updateTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 600px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">修改文章</h4>
+                </div>
+                <textarea name="txtContent" id="txtContent" class="form-control"></textarea>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-no "  data-dismiss="modal" id="cancelUpdate">取消</button>
+                    <button type="button" class="btn btn-sure" data-dismiss="modal" id="saveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出新增文章内容的模态框-->
+    <div class="modal fade container-fluid" id="addTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 500px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title">文章内容</h4>
+                </div>
+                <textarea name="txtContent" id="addTxtContent" class="form-control"></textarea>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no " data-dismiss="modal" id="myBtnAdd">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/jquery-3.2.1.js"></script>
+<script type="application/javascript" src="/Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+<script charset="utf-8" src="/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="/kindeditor/lang/zh_CN.js"></script>
+<script src="/js/fashion.js"></script>
+<script src="/js/ajax.js"></script>
+</body>
+</html>

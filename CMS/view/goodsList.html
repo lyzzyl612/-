@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="css/goodsList.css">
+    <script type="application/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <title>crewList</title>
+</head>
+<body>
+<!--=========面包屑导航==========-->
+<header class="container-fluid frame">
+    <div class="row">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="">首页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="">商品管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><a href="">商品列表</a></li>
+        </ul>
+        <!--<div class="col-xs-1">退出</div>-->
+    </div>
+</header>
+
+<!--查询-->
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="/crew/list.do" class="form-inline cyForm">
+                    <div class="form-group">
+                        <label for="goodsName">商品名称:</label>
+                        <input type="text" name="goodsName" size="9" class="form-control" id="goodsName"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="brand">品牌:</label>
+                        <select  id="brand" class="form-control" name="brand">
+                            <option value="" selected="selected">请选择品牌</option>
+                            <%for(var i=0;i< brandList.length;i++){ %>
+                            <option value="<%=brandList[i].b_id%>"><%=brandList[i].b_name%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">款式:</label>
+                        <select  id="sex" class="form-control" name="sex">
+                            <option value="" selected="selected">请选择款式</option>
+                            <option value="0">女款</option>
+                            <option value="1">男款</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="underline">线下试戴:</label>
+                        <select  id="underline" class="form-control" name="sex">
+                            <option value="" selected="selected">是否支持线下试戴</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">发布状态</label>
+                        <select  id="state" class="form-control" name="sex">
+                            <option value="" selected="selected">发布状态</option>
+                            <option value="1">已发布</option>
+                            <option value="0">已下架</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-success cx" id="btnSearch" onclick="search(this)">查询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <!--<a href="javascript:" onclick="datadel()" class="btn btn-danger radius"><i class="fa fa-trash"></i> 批量删除</a>-->
+            <a href="/goodsAdd.html"  class="btn btn-primary radius"><i class="fa fa-plus"></i> 添加商品</a>
+            <a href="javascript:"  class="btn btn-success radius addDict"  dict_value="风格"><i class="fa fa-plus"></i> 添加风格</a>
+            <a href="javascript:"  class="btn btn-info radius addDict" dict_value="颜色"><i class="fa fa-plus"></i> 添加颜色</a>
+            <a href="javascript:" class="btn btn-warning radius addDict" dict_value="材质"><i class="fa fa-plus"></i> 添加材质</a>
+            <a href="javascript:" class="btn btn-danger radius addDict" dict_value="边框"><i class="fa fa-plus" ></i> 添加边框</a>
+        </span>
+        <span class="r">共有数据：<strong id="totalCount"><%=totalCount%></strong> 条</span>
+    </div>
+
+    <div class="dataTables_length" id="DataTables_Table_0_length">
+        <!--<label>显示 <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select">-->
+            <!--<option value="10">10</option>-->
+            <!--<option value="25">25</option>-->
+            <!--<option value="50">50</option>-->
+            <!--<option value="100">100</option>-->
+        <!--</select> 条</label></div>-->
+
+    <!-- form表单部分-->
+    <div class="container-fluid" style="margin-top: 20px">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr style="background-color:#f5fafe ">
+                    <th><input type="checkbox" ></th>
+                    <th>ID</th>
+                    <th>商品名称</th>
+                    <th title="商城列表的缩略图">商品缩略图</th>
+                    <th>品牌</th>
+                    <th>进价</th>
+                    <th>卖价</th>
+                    <th >库存</th>
+                    <th >支持线下</th>
+                    <th >男/女</th>
+                    <th>风格</th>
+                    <th>材质</th>
+                    <th>框型</th>
+                    <th>颜色</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="tableList">
+                <%data.forEach(function(item){ %>
+                <tr>
+                    <td><input type="checkbox" ></td>
+                    <td><%=item.g_id%></td>
+                    <td><%=item.g_name%></td>
+                    <td><img style="width: 80px;height: 50px;" src="<%=item.g_src%>" alt=""/></td>
+                    <td><%=item.b_name%></td>
+                    <td><%=item.g_bid%></td>
+                    <td><%=item.g_saleprice%></td>
+                    <td><%=item.g_stock%></td>
+                    <%if(item.g_underline==1){ %>
+                    <td>是</td>
+                    <%}else{%>
+                    <td>否</td>
+                    <%}%>
+                    <%if(item.g_sex==1){ %>
+                    <td>男款</td>
+                    <%}else{%>
+                    <td>女款</td>
+                    <%}%>
+                    <td><%=item.style%></td>
+                    <td><%=item.material%></td>
+                    <td><%=item.frame%></td>
+                    <td><%=item.color%></td>
+                    <%if(item.state==1){ %>
+                    <td><span class="label label-success radius">已发布</span></td>
+                    <%}else{%>
+                    <td><span class="label label-default radius">已下架</span></td>
+                    <%}%>
+                    <td>
+                        <span class="label label-success radius" style="cursor: pointer;" data-toggle='modal' data-target='#goodsDetails' gid="<%=item.g_id%>" onclick="details(this)" title="查看详情">详情</span>
+                        <span class='fa fa-edit' onclick="goodsModify(this)" style="cursor: pointer;" title="修改" id="modifyStaff"  gid="<%=item.g_id%>"  data-toggle='modal'
+                              data-target='#myModal'></span>
+                        <span class='fa fa-refresh changeState' style="cursor: pointer;" gid="<%=item.g_id%>" title="切换状态" state="<%=item.state %>"></span>
+
+                    </td>
+                </tr>
+                <%})%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 弹出修改信息的模态框-->
+    <div class="modal fade container-fluid" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 650px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-inline change-box" id="upForm">
+                        <div style="height: 40px;">
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="moUpload">缩略图：</label>
+                            <img class="col-xs-3 col-sm-3" style="width: 80px;height: 50px;" src="" alt="" id="upImg"/>
+                            <input class="col-xs-5 col-sm-8" type="file" id="moUpload" name="minimg"/>
+                            <!--<button type="button" class="btn btn-primary">上传</button>-->
+                        </div>
+                        <br/>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upgoodsName">商品名称：</label>
+                            <input type="text"  class="form-control col-xs-6 col-sm-7" id="upgoodsName"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upBrand">所属品牌：</label>
+                            <select  id="upBrand" style="width: 197px;" class="form-control col-xs-8 col-sm-9" name="upBrand">
+                                <option value="" selected="selected">请选择品牌</option>
+                                <%for(var i=0;i< brandList.length;i++){ %>
+                                <option value="<%=brandList[i].b_id%>"><%=brandList[i].b_name%></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upBid">进价：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upBid"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upSale">卖价：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upSale"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upPromotion">促销价：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upPromotion"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upWeight">重量：</label>
+                                <input type="text" class="form-control col-xs-6 col-sm-7" id="upWeight"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upOuter">镜架外宽：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upOuter"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upWidth">镜架宽：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upWidth"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upLeg">镜腿长：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upLeg"/>
+                        </div>
+                        <div>
+                                <label class="form-label text-right col-xs-4 col-sm-2" for="upInner">镜架内宽：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upInner"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upHeight">镜架高：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upHeight"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upUnderline">线下试戴：</label>
+                            <select  id="upUnderline" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">是否支持线下试戴</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upStock">库存：</label>
+                            <input type="text" class="form-control col-xs-6 col-sm-7" id="upStock"/>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upsex">款式：</label>
+                            <select  id="upsex" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">请选择款式</option>
+                                <option value="0">女款</option>
+                                <option value="1">男款</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="uptype">类型：</label>
+                            <select  id="uptype" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">请选择类型</option>
+                                <option value="0">太阳镜</option>
+                                <option value="1">镜框</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upstyle">风格：</label>
+                            <select  id="upstyle" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">请选择风格</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upmaterial">材质：</label>
+                            <select  id="upmaterial" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">请选择材质</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label text-right col-xs-4 col-sm-2" for="upframe">框型：</label>
+                            <select  id="upframe" class="form-control col-xs-6 col-sm-7" name="sex">
+                                <option value="" selected="selected">请选择框型</option>
+                            </select>
+                        </div>
+                        <div class=" col-xs-12" id="checkColor">
+                            <label class="form-label text-right col-xs-2" >颜色：</label>
+                            <!--<label  class="form-label col-xs-1 col-sm-1" for="upcolor1" id="color1" value="">黑色:</label>-->
+                            <!--<input type="checkbox" class="form-control col-xs-1 col-sm-1" id="upcolor1"/>-->
+                            <!--<label  for="upcolor2" class="form-label col-xs-1 col-sm-1" id="color2">红色:</label>-->
+                            <!--<input type="checkbox" class="form-control col-xs-1 col-sm-1" id="upcolor2"/>-->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure btn-success" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no btn-danger" data-dismiss="modal" id="btnUpdate">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出商品详细信息的模态框-->
+    <div class="modal fade container-fluid" id="goodsDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width: 800px;height: 520px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="Detail">商品详情</h4>
+                    <!--<a href="javascript:" class="btn btn-danger radius" ><i class="fa fa-edit" ></i>修改</a>-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="cl pd-5 bg-1 bk-gray"><h4 class="modal-title" >商品基本信息</h4></div>
+                    <div id="common " class="mt-20">
+                        <div>
+                            <span>商品名称：</span><span id="dGoodsName"></span>
+                            <span>品牌：</span><span id="dBrandName"></span>
+                        </div>
+                        <div>
+                            <span>商城列表缩略图：</span><img id="minImg" style="width: 200px;height: 150px" src="" alt="商品列表缩略图"/>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="cl pd-5 bg-1 bk-gray"><h4 class="modal-title" >商品配置参数</h4></div>
+                    <div id="parameter" class="mt-20">
+                        <table>
+                            <tr>
+                                <td><span>镜架外宽：</span><span id="outerW"></span></td>
+                                <td><span>镜架宽：</span><span id="width"></span></td>
+                                <td><span>镜腿长：</span><span id="length"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>镜架内宽：</span><span id="innerW"></span></td>
+                                <td><span>镜架高：</span><span id="height"></span></td>
+                                <td><span>重量：</span><span id="weight"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>材质：</span><span id="material"></span></td>
+                                <td><span>边框类型：</span><span id="frame"></span></td>
+                                <td><span>进价：</span><span id="bid"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>卖价：</span><span id="saleprice"></span></td>
+                                <td><span>促销价：</span><span id="promotion"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer col-xs-12">
+                    <button type="button" class="btn btn-sure btn-success" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-no btn-danger" data-dismiss="modal"  id="detailEdit">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- <div class="modal fade modal-del" id="delRole" data-keyboard="true" data-backdrop="static"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    您是否需要删除数据？
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sure" type="button" id="btnDel" onclick="deleteClass(this)" data-dismiss="modal">确认</button>
+                    <button class="btn btn-no" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- 弹出添加风格模态框-->
+    <div class="modal fade modal-del" id="addAdict" data-keyboard="true" data-backdrop="static"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    添加<span class="addDic"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="dict_name" class="addDic col-xs-1" style="padding: 2px 0;"></label>
+                        <div class="col-xs-5" >
+                            <input type="text" class="form-control " id="dict_name"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sure" type="button" id="addDicSave" onclick="deleteClass(this)" data-dismiss="modal">确认</button>
+                    <button class="btn btn-no" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 下方翻页-->
+    <nav class="container cyNav" aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="javascript:" aria-label="Previous" id="btnPrev">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li id="changePage">
+                <%for(var i=1;i<= totalPage;i++){ %>
+                <a onclick="changePage(<%=i%>)" href="javascript:"><%=i%></a>
+                <%}%></li>
+            <li >
+                <a href="javascript:" aria-label="Next" id="btnNext">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    </div>
+</section>
+<script type="application/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="application/javascript" src="Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+<script type="application/javascript" src="js/dataBase.js"></script>
+<script type="application/javascript" src="js/ajax.js"></script>
+<script type="application/javascript" src="js/goodsList.js"></script>
+
+<script>
+    console.log("<%totalPage%>");
+    var str = "";
+    var arr = top.crewArry;
+    var xb;
+
+    function deleteClass(obj){
+
+    }
+    //    点击按钮修改人员信息
+    function changeBtn(obj){
+
+    }
+
+
+    //    修改后保存数据并刷新页面
+    function saveDate(obj){
+
+    }
+
+    function search(obj){
+
+    }
+
+
+</script>
+</body>
+</html>

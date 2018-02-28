@@ -1,0 +1,272 @@
+.pad{
+    padding:0;
+}
+/**{*/
+    /*letter-spacing: 4px;*/
+/*}*/
+header {
+    width: 100%;
+    height: 70px;
+    padding: 0 15px;
+    background-color: rgb(33,33,33);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+ul{
+    list-style: none;
+    padding: 0;
+    /*padding: 0 !important;*/
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+header .logo {
+    height: 70px;
+}
+.logo .fa-bars{
+   margin-left: 58px;
+}
+header .logo a {
+    font-size: 28px;
+    line-height: 70px;
+}
+header .user img {
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.user span {
+    line-height: 70px;
+}
+.user span:hover{
+    color: coral;
+    cursor: pointer;
+}
+
+.user i{
+    margin: 0 10px;
+    color: white;
+}
+.user i:hover{
+    color: coral;
+    cursor: pointer;
+}
+.user a:hover{
+    color: coral;
+    cursor: pointer;
+}
+
+.loginOut {
+    display: none;
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    bottom: -40px;
+    background-color: rgba(51,51,51,.3);
+}
+/*�������������ɫ*/
+.loginOut .row {
+    padding: 8px 0;
+}
+
+.head-nav {
+    cursor: pointer;
+    height: 70px;
+    line-height: 70px;
+}
+/*header E*/
+
+/*main-nav B*/
+/*��ർ�����ı�����ɫ*/
+section .container-fluid .col-lg-2 {
+    background-color: rgb(61,61,61);
+}
+
+.main-nav>ul>li {
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    transition: all .2s linear;
+    -webkit-transition: all .2s linear;
+}
+/*���Ŀ¼�������ʱ��ɫ*/
+.main-nav>ul>li:hover>a {
+    background-color: rgb(48,48,48);
+}
+/*.main-nav>ul>li:visited>a{*/
+    /*text-decoration: none;*/
+/*}*/
+.main-nav ul li i {
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+.main-nav ul li a {
+    display: block;
+    padding: 22px 10px;
+    color: #ffffff;
+}
+
+.main-nav ul li:last-child {
+    border-bottom: none;
+}
+
+.main-nav .fa-angle-up {
+    margin-left: 20%;
+    transition: all .2s linear;
+    -webkit-transition: all .2s linear;
+}
+
+.main-nav .i-rotate {
+    transform: rotate(180deg);
+}
+
+.main-nav .subMenu ,.main-nav .subBrand,
+.main-nav .showUser,.main-nav .showImg{
+    display: none;
+    background-color: rgba(51,51,51,.3);
+}
+/*�����*/
+.main-nav .subMenu li {
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-bottom: none;
+}
+.main-nav .subBrand li {
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-bottom: none;
+}
+.main-nav .showImg li {
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-bottom: none;
+}
+.main-nav .showUser li {
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-bottom: none;
+}
+.main-nav .subMenu a,.main-nav .subBrand a,
+.main-nav .showImg a,.main-nav .showUser a{
+    padding: 15px 10px;
+}
+
+/*������������ѡ��hoverʱ��ɫ*/
+.subMenu li:hover a {
+    /*background-color: rgba(51,51,51,.4);*/
+    background-color: rgb(87,87,87);
+}
+/*Ʒ�ƹ�������ѡ��hoverʱ��ɫ*/
+.subBrand li:hover a {
+    background-color: rgb(87,87,87);
+}
+.showImg li:hover a {
+    background-color: rgb(87,87,87);
+}
+.showUser li:hover a {
+    background-color: rgb(87,87,87);
+}
+
+section a{
+    background-color: rgb(61,61,61);
+}
+.font1{
+    color: coral;
+}
+/*.nav-menu{*/
+    /*background-color:rgb(61,61,61) ;*/
+/*}*/
+
+
+
+.nav-menu {
+    min-height: 100vh !important;
+    /*width: 16%;*/
+}
+/*main-nav E*/
+
+/*iframe B*/
+iframe {
+    width: 100%;
+    min-height: 100vh !important;
+    /*border: 1px solid #fff;*/
+    background-color: transparent;
+}
+
+/*iframe E*/
+
+/*footer B*/
+footer {
+    /*border-top: 1px solid rgba(255,255,255,0.3);*/
+    background-color: rgb(87,87,87);
+}
+
+footer p {
+    margin: 0;
+    padding: 15px 0;
+}
+
+a{
+    text-decoration: none;
+    text-decoration-color: red;
+}
+a:active{
+    text-decoration: none;
+}
+.subBrand>ul>li>a,.subMenu>ul>li>a,.showImg>ul>li>a,.showUser>ul>li>a{
+    padding-left:30px!important;
+}
+/*footer E*/
+body,h1,h2,h3,h4,h5,h6,p,a {
+    font-family: "microsoft yahei";
+}
+
+/*body {*/
+    /*background: url("../images/bg.png");*/
+    /*background-color: rgb(87,87,87);*/
+/*}*/
+.user img{
+    width: 50px;
+    height: 50px;
+}
+
+.fa-bars{
+    color: white;
+    font-size: 30px;
+    /*margin-left: 16%;*/
+}
+.fa-bars:hover{
+    cursor: pointer;
+}
+.nopd {
+    padding: 0;
+    margin: 0;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.dis-flex {
+    display: flex;
+}
+
+.vertical-align {
+    align-items: center;
+}
+
+.text-24 {
+    font-size: 24px;
+}
+
+.text-20 {
+    font-size: 24px;
+}
+
+.text-18 {
+    font-size: 18px;
+}
+
+.text-16 {
+    font-size: 16px;
+}
+
+.height100 {
+    height: 100%;
+}

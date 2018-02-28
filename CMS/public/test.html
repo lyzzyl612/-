@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="js/jquery-3.2.1.js"></script>
+<script type="application/javascript">
+    $(function(){
+        dictionary();
+    })
+    function dictionary(){
+        $.post("/goods/dictionary.do",null,function(data){
+//            let obj = JSON.parse(data);
+//            var gStyle = obj.gstyle;
+//            var gMaterial = obj.gmaterial;
+//            var gframe = obj.gframe;
+//            var gcolor = obj.gcolor;
+
+            console.log(data);
+
+        });
+    }
+</script>
+</body>
+</html>

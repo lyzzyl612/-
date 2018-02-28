@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <title>frame</title>
+</head>
+<body>
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="logo col-lg-6 col-md-5 col-xs-3 text-center-xs ">
+                    <a class="text-white" href="#">MOLSIO<span class="font1">N</span></a>
+                <i class="fa fa-bars" onclick="toggleOne(this)" ></i>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6 text-right text-center-xs">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-md-push-6 col-lg-push-6 user">
+                        <!--<img class="hidden-xs" src="../resource/img/touxiang.png" style="width: 50px;height: 50px" alt=""/>-->
+                        <img src="../images/img1.jpg" class="animated tada" alt=""/>
+                        <span class="text-12 text-white" id="loginName"></span>
+                       <i class="fa fa-envelope"></i>
+                        <i class="fa fa-tasks"></i>
+                        <a href="javascript:" style="margin-left: 10px" class="text-white text-12" id="outLogin">登出</a>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-toggle nopd col-xs-2 head-nav" data-toggle="collapse" data-target="#myNav">
+                <i class="fa fa-bars text-white text-20"></i>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<section class="nopd section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 nopd nav-menu ">
+                <div class="navbar main-nav height100 nopd collapse navbar-collapse" id="myNav">
+                    <ul class="height100">
+                        <li id="showUser">
+                            <a href="javascript:">
+                                <i class="fa fa-group"></i>
+                                用户管理
+                                <i class="fa fa-angle-up hidden-sm angle4"></i>
+                            </a>
+                            <div class="showUser">
+                                <ul>
+                                    <li>
+                                        <a href="/userList.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            用户列表
+                                        </a>
+                                    </li>
+                                    <!--<li>
+                                        <a href="/adminList.html" target="content-right">
+                                            <i class="fa fa-user-secret"></i>
+                                            管理员列表
+                                        </a>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="/goodsList.html" target="content-right">
+                                <i class="fa fa-address-book"></i>
+                                商品管理
+                            </a>
+                        </li>
+                        <li id="showBrand">
+                            <a href="javascript:">
+                                <i class="fa fa-cogs"></i>
+                                品牌管理
+                                <i class="fa fa-angle-up hidden-sm angle1"></i>
+                            </a>
+                            <div class="subBrand">
+                                <ul>
+                                    <li>
+                                        <a href="/brand.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            品牌列表
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/companyList.html" target="content-right">
+                                            <i class="fa fa-user-secret"></i>
+                                            公司列表
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <a href="/reviewList.html" target="content-right">
+                                <i class="fa fa-book"></i>
+                                评论管理
+                            </a>
+                        </li>
+                        <li id="showSubMenu" >
+                            <a href="javascript:">
+                                <i class="fa fa-cogs"></i>
+                                订单管理
+                                <i class="fa fa-angle-up hidden-sm angle2"></i>
+                            </a>
+                            <div class="subMenu">
+                                <ul>
+                                    <li>
+                                        <a href="/orderList.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            订单列表
+                                        </a>
+                                    </li>
+                                    <!--<li>
+                                        <a href="/service.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            售后管理
+                                        </a>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="/fashionList.html" target="content-right">
+                                <i class="fa fa-calendar-check-o"></i>
+                                资讯管理
+                            </a>
+                        </li>
+
+                        <!--<li id="showImg">
+                            <a href="javascript:" >
+                                <i class="fa fa-cogs"></i>
+                                图片管理
+                                <i class="fa fa-angle-up hidden-sm angle3"></i>
+                            </a>
+                            <div class="showImg">
+                                <ul>
+                                    <li>
+                                        <a href="/indexImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            首页图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/goodsImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            商品图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/brandImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            品牌图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/fanshionList.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            时尚潮流图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/onlineImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            虚拟试戴图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/userImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            用户图片管理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/reviewImg.html" target="content-right">
+                                            <i class="fa fa-address-card"></i>
+                                            评论图片管理
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>-->
+
+                    </ul>
+                </div>
+            </div>
+            <div class="pad iframeRight col-xs-10">
+                <iframe src="/goodsList.html" frameborder="0" scrolling="no" name="content-right"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="nopd">
+    <p class="text-center text-white">
+        蜀ICP备11000634号-10 成都国信安信息产业基地有限公司 版权所有 Copyright©2012-2017 gxaedu.com , All Rights Reserved
+    </p>
+</footer>
+
+
+
+<!--<div class="col-lg-10 col-md-10 col-sm-9 col-xs-8 right-bar">-->
+<!--<iframe src="userList.html" frameborder="0" name="content-right"></iframe>-->
+<!--</div>-->
+
+<script type="application/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="application/javascript" src="Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+<script type="application/javascript" src="js/dataBase.js"></script>
+<!--<script>-->
+<!--function pop(obj) {-->
+<!--var len = obj.children.length + 1;-->
+<!--if (obj.style.height == "" || obj.style.height == "48px") {-->
+<!--obj.style.height = 48 * len + "px";-->
+<!--} else {-->
+<!--obj.style.height = "48px";-->
+<!--}-->
+<!--}-->
+<!--</script>-->
+<script>
+    $("#showBrand>a").click(function () {
+        $(".subBrand").slideToggle();
+        $(".angle1").toggleClass("i-rotate");
+    });
+    $("#showSubMenu>a").click(function () {
+        $(".subMenu").slideToggle();
+        $(".angle2").toggleClass("i-rotate");
+    });
+
+    $("#showImg>a").click(function () {
+        $(".showImg").slideToggle();
+        $(".angle3").toggleClass("i-rotate");
+    });
+    $("#showUser>a").click(function () {
+        $(".showUser").slideToggle();
+        $(".angle4").toggleClass("i-rotate");
+    });
+//$("#showSubMenu>a").click(function(){
+//    console.log(11111111111111111111111)
+////    console.log($(this))
+////    $(this).next().sideToggle();
+////    console.log($(obj).next());
+////    $(this).find(".angle1").toggleClass("i-rotate");
+//});
+//function open(obj){
+//    console.log(11111111111111111111111)
+//    $(obj).next().sideToggle();
+//    console.log($(obj).next());
+//    $(obj).find(".angle1").toggleClass("i-rotate");
+//}
+
+var current=0;
+//点击上方隐藏显示菜单按钮，右侧内容部分变为全屏
+function toggleOne(obj){
+    console.log(obj);
+//左侧菜单栏隐藏
+    $(".nav-menu").toggle("fast");
+//    current=(parseInt(current)+90);
+//    console.log(current);
+//    console.log(typeof current);
+//    obj.style.transform="rotate("+current+"'deg')";
+    if((obj.style.transform==null)||(obj.style.transform)=="rotate(90deg)"){
+        obj.style.transform="rotate(0)";
+//        obj.style.color="white";
+    }else{
+        obj.style.transform="rotate(90deg)";
+//        obj.style.color="coral";
+    }
+
+//    右侧内容部分变为全屏
+    let attr = $(".iframeRight").attr("class").split(" ")[$(".iframeRight").attr("class").split(" ").length-1];
+    console.log(attr);
+    if(attr == "col-xs-10"){
+        $(".iframeRight").addClass("col-xs-12");
+        $(".iframeRight").removeClass("col-xs-10");
+    }else{
+        $(".iframeRight").removeClass("col-xs-12");
+        $(".iframeRight").addClass("col-xs-10");
+    }
+}
+
+    $().ready(function(){
+        $.post('user/frameLogin.do',null,function(data){
+            console.log(data);
+$("#loginName").html(data)
+        })
+    });
+    $("#outLogin").click(function(){
+        location.href="/login.html"
+    });
+//$("#toggle").click(function(){
+//    console.log("龟儿子");
+//    $(".nav-menu").toggle("slow");
+//
+//});
+
+</script>
+</body>
+</html>

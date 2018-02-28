@@ -1,0 +1,145 @@
+*{
+    padding: 0;
+    margin: 0;
+    word-wrap: break-word;
+}
+/*=====面包屑导航========*/
+.page-content .page-breadcrumb.breadcrumb {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding-right: 30px;
+    padding-left: 8px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    border: 0 !important;
+    background-color: #eee;
+}
+.breadcrumb {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    border-bottom: 1px solid #e5e5e5;
+}
+/*=====添加公司========*/
+.bg-1 {
+    background-color: #f5fafe;
+    padding-right: -15px!important;
+    padding-left: -15px!important;
+}
+.bk-gray {
+    border: solid 1px #eee;
+}
+.pd-5 {
+    padding: 5px!important;
+}
+.r, .f-r {
+    float: right!important;
+    margin-top: 6px;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+.cl, .clearfix {
+    zoom: 1;/*兼容IE的缩放*/
+}
+/*=====修改样式========*/
+.upd,.del{
+    cursor: pointer;
+}
+.btn-success{
+    margin-top: 5px;
+}
+.form-label{
+    width: 44%;
+    margin-top: 12px;
+}
+.form-control{
+    margin-top: 6px;
+}
+.modal-footer{
+    margin-top: 30px;
+}
+/*========图片大小========*/
+td>img{
+    width: 90px;
+    height: 44px;
+}
+/*========上传按钮========*/
+.upBtn{
+    width: 80px;
+    height: 34px;
+    padding:6px 12px;
+    font-size: 14px;
+    font-weight:normal;
+    text-align:center;
+    white-space:nowrap;
+    cursor: pointer;
+    background-color: #ddd;
+    margin-right: 100px;
+}
+#lastUp{
+    margin-top: 20px;
+}
+
+/*翻页*/
+.cyNav{
+    display: flex;
+    justify-content: center;
+}
+section{
+    margin: 0 auto;
+    width: 96%;
+}
+td{
+    text-align: center;
+}
+td:nth-child(7){
+    width: 13%;
+    font-size: 12px;
+ }
+td:nth-child(8){
+    width: 140px;
+    height: 44px;
+}
+.brandStory{
+    cursor: pointer;
+    text-decoration: underline;
+}
+#listStory div{
+    text-align: center;
+}
+#listStory div:last-child{
+    margin-top: 40px;
+}
+#listStory img:first-child{
+    width: 300px;
+}
+#branImg #storyUpdateImg{
+    width: 100px;
+}
+/*多行文本省略显示*/
+.content_txt{
+    overflow : hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;/*第几行显示省略号*/
+    -webkit-box-orient: vertical;
+}
+#storyIndex{
+    width: 40%;
+    height: 100px;
+    margin: 10px auto;
+    line-height: 100px;
+    text-align: center;
+}
+#storyIndex>img{
+    width: 100px;
+}
+.btn1{
+    float: left;
+}

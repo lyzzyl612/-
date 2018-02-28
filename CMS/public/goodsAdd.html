@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Bootstrap-3.7.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="css/goodsList.css">
+    <script type="application/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <title>goodsAdd</title>
+</head>
+<body>
+
+<!--=========面包屑导航==========-->
+<header class="container-fluid frame">
+    <div class="row">
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="">首页</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="">商品管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li><a href="">新增商品</a></li>
+        </ul>
+        <!--<div class="col-xs-1">退出</div>-->
+    </div>
+</header>
+<!--班级基本信息-->
+<div class="container" id="goodsAdd">
+    <form class="form-inline container information" action="/uploadFile.do" enctype="multipart/form-data" id="goodsAddForm">
+        <div class="row">
+            <div class="col-xs-6 form-group">
+                <label for="agoodsName" class="form-label text-right col-xs-5 col-sm-3">商品名称：</label>
+                <input type="text" class="form-control col-xs-6 col-sm-7" id="agoodsName"/>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="abrandName" class="form-label text-right col-xs-5 col-sm-3">品牌名称：</label>
+                <select name="classState" class="form-control col-xs-6 col-sm-7" id="abrandName">
+                    <option value="">请选择品牌</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <!--<form action="/uploadFile.do" method="post" enctype="multipart/form-data" name="uploadFile">-->
+                <div class="col-xs-6 form-group">
+                    <label class="form-label text-right col-xs-5 col-sm-3">缩略图：</label>
+                    <input style="display: inline"  class=" col-xs-6 col-sm-7" type="file" accept=".jpg,.png,.gif,.jpeg"  id="minimg" name="minimg"/>
+                    <!--<button type="submit" class="btn btn-primary" for="uploadFile" id="btnUpFile">上传</button>-->
+                    <img src="" alt="" id="imgimg"/>
+                </div>
+            <!--</form>-->
+            <div class="col-xs-6 form-group">
+                <label for="asex" class="form-label text-right col-xs-5 col-sm-3">款式：</label>
+                <select name="classState" class="form-control col-xs-6 col-sm-7" id="asex">
+                    <option  value="">请选择款式</option>
+                    <option value="0">女款</option>
+                    <option value="1">男款</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 form-group">
+                <label for="abid" class="form-label text-right col-xs-5 col-sm-3">进价：</label>
+                <div class="input-group">
+
+                <input type="text" class="form-control col-xs-6 col-sm-7 danwei" id="abid"/>
+                <!--<div class="input-group-addon"></div>-->
+                    <span class="input-group-addon">￥</span>
+                    <!--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>-->
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="asale" class="form-label text-right col-xs-5 col-sm-3">卖价：</label>
+                <div class="input-group">
+                <input type="text"  class="form-control col-xs-6 col-sm-7 danwei" id="asale"/>
+                <span class="input-group-addon">￥</span>
+                    </div>
+            </div>
+
+
+
+            <div class="col-xs-6 form-group">
+                <label for="apromotion" class="form-label text-right col-xs-5 col-sm-3">促销价：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="apromotion"/>
+                <span class="input-group-addon">￥</span>
+                    </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aweight" class="form-label text-right col-xs-5 col-sm-3">重量：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="aweight"/>
+                    <span class="input-group-addon">g</span>
+                    </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aouter" class="form-label text-right col-xs-5 col-sm-3">镜架外宽：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="aouter"/>
+                <span class="input-group-addon">mm</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="awidth" class="form-label text-right col-xs-5 col-sm-3">镜架宽：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="awidth"/>
+                <span class="input-group-addon">mm</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aleg" class="form-label text-right col-xs-5 col-sm-3">镜腿长：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="aleg"/>
+                <span class="input-group-addon">mm</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="ainner" class="form-label text-right col-xs-5 col-sm-3">镜架内宽：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="ainner"/>
+                <span class="input-group-addon">mm</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aheight" class="form-label text-right col-xs-5 col-sm-3">镜架高：</label>
+                <div class="input-group">
+                    <input type="text" size="16" class="form-control col-xs-6 col-sm-7 danwei" id="aheight"/>
+                    <span class="input-group-addon">mm</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aunderline" class="form-label text-right col-xs-5 col-sm-3">线下试戴：</label>
+                <select name="classState" class="form-control" id="aunderline">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="acount" class="form-label text-right col-xs-5 col-sm-3">库存数量：</label>
+                <div class="input-group">
+                <input type="text" size="16" class="form-control" id="acount"/>
+                <span class="input-group-addon ">件</span>
+                </div>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="atype" class="form-label text-right col-xs-5 col-sm-3">类型：</label>
+                <select name="classState" class="form-control " id="atype">
+                    <option value="0">太阳镜</option>
+                    <option value="1">镜框</option>
+                </select>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="astyle" class="form-label text-right col-xs-5 col-sm-3">风格：</label>
+                <select name="classState" class="form-control" id="astyle">
+                    <option value="">请选择风格</option>
+                </select>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="amaterial" class="form-label text-right col-xs-5 col-sm-3">材质：</label>
+                <select name="classState" class="form-control" id="amaterial">
+                    <option value="">请选择材质</option>
+                </select>
+            </div>
+            <div class="col-xs-6 form-group">
+                <label for="aframe" class="form-label text-right col-xs-5 col-sm-3">框型：</label>
+                <select name="classState" class="form-control" id="aframe">
+                    <option value="">请选择框型</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12" id="checkColor">
+                <label class="form-label col-xs-2 text-center" >颜色：</label>
+                <!--<label  class="form-label col-xs-1 col-sm-1" for="upcol or1" id="color1" value="">黑色:</label>-->
+                <!--<input type="checkbox" class="form-control col-xs-1 col-sm-1" id="upcolor1"/>-->
+                <!--<label  for="upcolor2" class="form-label col-xs-1 col-sm-1" id="color2">红色:</label>-->
+                <!--<input type="checkbox" class="form-control col-xs-1 col-sm-1" id="upcolor2"/>-->
+            </div>
+        </div>
+
+            <!--<div class="row cl">-->
+                <!--<label class="form-label text-center col-xs-2">图片上传：</label>-->
+                <!--<div class="formControls col-xs-8 col-sm-9">-->
+                    <!--<div class="uploader-list-container">-->
+                        <!--<div class="queueList">-->
+                            <!--<div id="dndArea" class="placeholder">-->
+                                <!--<div id="filePicker-2"></div>-->
+                                <!--<p>或将照片拖到这里，单次最多可选300张</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="statusBar" style="display:none;">-->
+                            <!--<div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>-->
+                            <!--<div class="info"></div>-->
+                            <!--<div class="btns">-->
+                                <!--<div id="filePicker2"></div>-->
+                                <!--<div class="uploadBtn">开始上传</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+    </form>
+</div>
+
+<div class="container newStage">
+
+    <div class="showError"></div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <button type="button" class="btn btn-success save" id="gasave" >保存</button>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="application/javascript" src="Bootstrap-3.7.3-dist/js/bootstrap.js"></script>
+<script type="application/javascript" src="js/ajax.js"></script>
+<script type="application/javascript" src="js/goodsAdd.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        #divImage{
+            padding:20px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+            width: 250px;
+            height: 300px;
+        }
+        #divImage img{
+            padding: 2px;
+            border: 0;
+
+        }
+    </style>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data" name="fileInfo" id="form1" >
+    <div id="divImage"></div>
+    <div class="form-signin-heading" id="btnUpload">上传头像</div>
+
+    注：头像限制在2M
+    <input name="txtFile" id="txtFile" style="display: none" type="file" accept=".jpg,.png,.jpeg,.gif,.bmp"/>
+
+</form>
+
+
+<script>
+    //模拟点击的代码：
+    var upload = document.getElementById("btnUpload");//上传头像
+    var txtFile = document.getElementById("txtFile");//选择文件上传
+    var divImg=  document.getElementById("divImage");//包住img的div
+    upload.onclick =function(){
+        txtFile.click(); //注意IE的兼容性
+    };
+
+    txtFile.onchange=function(){
+        if(txtFile.files[0].size>2*1024*1024){
+            alert("上传图片过大，请保持在2M内")
+        }else {
+            uploadImg();
+        }
+    };
+
+
+    function uploadImg(){
+// 1. 创建一个对象
+        var httpRequest;
+        if(window.XMLHttpRequest){ //DOM方式
+            httpRequest = new XMLHttpRequest(); //DOM的方式
+        }else if(window.ActiveXObject){
+            httpRequest = new ActiveXObject("Microsoft.XMLHTTP"); //IE浏览器
+        }
+
+//2.
+        httpRequest.open("post","/try/uploadImg.do");
+        // httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        //3. 接收影响回来的数据
+        httpRequest.onreadystatechange=function(){
+            if(httpRequest.status==200&&httpRequest.readyState==4) {
+                var json = JSON.parse(httpRequest.responseText);
+                divImg.innerHTML="<img src='"+json.msg.url+"'/>";
+            }else{
+                divImg.innerHTML="上传中...";
+            }
+        };
+        //FormData的最大优点就是我们可以异步上传一个二进制文件
+        var form = document.getElementById('form1');
+        var formData = new FormData(form);
+        httpRequest.send(formData); // 发送信息
+    }
+
+
+</script>
+</body>
+</html>

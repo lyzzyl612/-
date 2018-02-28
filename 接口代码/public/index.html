@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style type="text/css">
+        table tr td{
+            width: 200px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+  <table border="1">
+      <tbody id="list">
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      </tbody>
+  </table>
+<button id="but">获取</button>
+  <button class="del">del</button>
+<script src="js/jquery.js"></script>
+<script>
+   $("#but").click(function () {
+       console.log("22");
+       $.post('/coll/coll.do',{},function(data){
+           console.log(data);
+           console.log(typeof data);
+            if(data.code==200){
+//                location.href="/index.html";
+            }else{
+                alert("chunxu");
+            }
+       },"json");
+   });
+//删除
+   $("#list").on('click','.del',function () {
+       var id = $(this).attr("sid");
+       if(confirm("确定要删除")){
+           $.post('/coll/del.do',{"id":id},function(data){
+               console.log(data);
+               if(data.code==200){
+                   alert("删除成功");
+               }else{
+                   alert("程序出错");
+               }
+           },"json");
+       }
+
+   });
+</script>
+</body>
+</html>

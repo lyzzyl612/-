@@ -16,6 +16,8 @@ module.exports={
         o_underline=parseInt(o_underline);
         let o_deposit = (req.method == "POST")?req.body.o_deposit:req.query.o_deposit;
         o_deposit=parseInt(o_deposit);
+        let o_stateo = (req.method == "POST")?req.body.o_state:req.query.o_state;
+        o_stateo=parseInt(o_stateo);
         let orderId = (req.method == "POST")?req.body.orderId:req.query.orderId;
         orderId=parseInt(orderId);
         let a_province = (req.method == "POST")?req.body.a_province:req.query.a_province;
@@ -24,7 +26,7 @@ module.exports={
         let a_details = (req.method == "POST")?req.body.a_details:req.query.a_details;
 
 
-        orderModal.update([o_amount,o_underline,o_deposit,a_province,a_city,a_region,a_details,orderId]).then(function(data){
+        orderModal.update([o_amount,o_underline,o_deposit,o_stateo,a_province,a_city,a_region,a_details,orderId]).then(function(data){
 
             if(data.affectedRows>0){
                 res.send("修改成功");
@@ -39,11 +41,13 @@ module.exports={
     },
     select(req,res){
         let id = (req.method == "POST") ? req.body.id : req.query.id;
-
+        console.log("2222222222222222");
+        console.log(id);
 
         orderModal.select(id).then(function(data){
             res.send(data);
         }).catch(function(err){
+            console.log(err);
             res.send("数据出错");
         })
     },
@@ -95,10 +99,13 @@ module.exports={
         let pageSize = (req.method == "POST")?req.body.pageSize:req.query.pageSize;
 
         let currentPage = (req.method == "POST") ? req.body.currentPage : req.query.currentPage;
+        console.log("dfffffffff")
 
         orderModal.list(o_state,o_under,o_dep,selName,selLog,currentPage,pageSize).then(function(data){
 
             res.send(data.data);
+            //console.log("333333333333333333333333333333333333333333")
+            console.log(data)
 
 
         }).catch(function(err){

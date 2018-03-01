@@ -70,7 +70,6 @@ function load(){
 function dictionary(){
     $.post("/goods/dictionary.do",null,function(data){
         let obj = data;
-        console.log("111111111")
         console.log(obj);
         var gStyle = obj.gstyle;
         var gMaterial = obj.gmaterial;

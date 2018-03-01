@@ -1,214 +1,118 @@
 <template>
-  <div id="optionNav">
-
-    <!--男女-->
-    <el-select v-model="value1" name="sex" id="sex" class="isOption" placeholder="性别">
-      <el-option v-for="item in sex"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
-      </el-option>
-    </el-select>
-
+  <div id="optionNav" >
     <!--框架类型-->
-    <el-select v-model="value2" name="frame" id="frame" class="isOption" placeholder="框架类型">
-      <el-option v-for="item in frame"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
+    <el-select v-model="value1" @change="changeValue" name="frame_type" id="frame_type" value-key="frame_type" class="isOption" placeholder="框架类型">
+      <el-option v-for="(item,index) in frame"
+                 :key="index"
+                 :label="item"
+                 :value="item">
       </el-option>
     </el-select>
 
     <!--材质-->
-    <el-select v-model="value3" name="material" id="material" class="isOption" placeholder="材质">
-      <el-option v-for="item in material"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
+    <el-select v-model="value2" name="material" id="material" value-key="material" class="isOption" placeholder="材质">
+      <el-option v-for="(item,index) in material"
+                 :key="index"
+                 :label="item"
+                 :value="item">
       </el-option>
     </el-select>
 
     <!--颜色-->
-    <el-select v-model="value4" name="color" id="color" class="isOption" placeholder="颜色">
-      <el-option v-for="item in color"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
+    <el-select v-model="value3" name="color" id="color" value-key="color" class="isOption" placeholder="颜色">
+      <el-option v-for="(item,index) in color"
+                 :key="index"
+                 :label="item"
+                 :value="item">
       </el-option>
     </el-select>
 
     <!--品牌-->
-    <el-select v-model="value5" name="brand" id="brand" class="isOption" placeholder="品牌">
-      <el-option v-for="item in brand"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
-      </el-option>
-    </el-select>
-
-    <!--价格-->
-    <el-select v-model="value6" name="price" id="price" class="isOption" placeholder="价格">
-      <el-option v-for="item in price"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
+    <el-select v-model="value4" name="brand" id="brand" value-key="brand" class="isOption" placeholder="品牌">
+      <el-option v-for="(item,index) in brand"
+                 :key="index"
+                 :label="item"
+                 :value="item">
       </el-option>
     </el-select>
 
     <!--是否支持线下试戴-->
-    <el-select v-model="value7" name="offline_try" id="offline_try" class="isOption" placeholder="是否支持线下试戴">
-      <el-option v-for="item in offline_try"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
+    <el-select  v-model="value5" name="offline_try" id="offline_try" value-key="offline_try" class="isOption" placeholder="是否支持线下试戴">
+      <el-option v-for="(item,index) in offline_try"
+                 :key="index"
+                 :label="item"
+                 :value="item">
       </el-option>
     </el-select>
-
   </div>
+
 </template>
 
 
-<script type="es6">
+<script>
   export default {
-    data() {
+    data(){
       return {
-//          性别
-        sex: [
-          {
-            value: 'male',
-            label: '男士'
-          },
-          {
-            value: 'female',
-            label: '女士'
-          }
-        ],
 //        框架
-        frame: [
-          {
-            value: 'fullFrame',
-            label: '全框'
-          },
-          {
-            value: 'halfRimless',
-            label: '半框'
-          },
-        ],
+        frame: [],
 //        材料
-        material: [{
-            value: 'slab',
-            label: '板材'
-          },
-          {
-            value: 'metal',
-            label: '金属'
-          },
-          {
-            value: 'pc',
-            label: 'PC'
-          },
-          {
-            value: 'tr',
-            label: 'TR'
-          },
-        ],
+        material: [],
 //        颜色
-        color:[
-          {
-            value: 'black',
-            label: '黑'
-          },
-          {
-            value: 'white',
-            label: '白'
-          },
-          {
-            value: 'blue',
-            label: '蓝'
-          },
-          {
-            value: 'red',
-            label: '红'
-          },
-          {
-            value: 'yellow',
-            label: '黄'
-          },
-          {
-            value: 'green',
-            label: '绿'
-          },
-        ],
+        color: [],
 //          品牌
-        brand:[
-          {
-            value: 'prsr',
-            label: 'prsr'
-          },
-          {
-            value: 'gucci',
-            label: 'Gucci'
-          },
-          {
-            value: 'nikon',
-            label: 'Nikon'
-          },
-          {
-            value: 'bolon',
-            label: 'Bolon'
-          },
-          {
-            value: 'loho',
-            label: 'Loho'
-          },
-          {
-            value: 'essilor',
-            label: 'Essilor'
-          },
-        ],
+        brand: [],
 //          价格
-        price:[
-          {
-            value: '100-200',
-            label: '100到200'
-          },
-          {
-            value: '200-400',
-            label: '200到400'
-          },
-          {
-            value: '400-600',
-            label: '400到600'
-          },
-          {
-            value: '600-800',
-            label: '600到800'
-          },
-          {
-            value: '800',
-            label: '800以上'
-          },
-        ],
+        price: [],
 //          是否支持线下试戴
-        offline_try:[
-          {
-            value: '1',
-            label: '支持'
-          },
-          {
-            value: '0',
-            label: '不支持'
-          },
-        ],
+        offline_try: [],
         value1: '',
         value2: '',
         value3: '',
         value4: '',
         value5: '',
-        value6: '',
-        value7: '',
+        toParentValue:'',
       }
-    }
+    },
+    props:[
+      'allGoodsInfo',
+    ],
+    methods:{
+//    选择框值改变后传给父组件
+      changeValue(value) {
+        this.toParentValue = value;
+        this.$emit("sendDataFromChild", this.toParentValue);
+      },
+      //去重复方法
+      removeRep: function (val, key) {
+        let arr = [];
+        for (let i = 0; i < val.length; i++) {
+          arr.push(val[i][key]);
+        }
+
+        arr.sort(); //先排序
+        let res = [];
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i] !== res[res.length - 1]) {
+            res.push(arr[i]);
+          }
+        }
+        return res;
+      },
+      //全部去重复
+      allRemoveRep:function () {
+        this.frame = this.removeRep(this.allGoodsInfo,'frame');
+        this.material = this.removeRep(this.allGoodsInfo,'material');
+        this.color = this.removeRep(this.allGoodsInfo,'color');
+        this.brand = this.removeRep(this.allGoodsInfo,'b_name');
+        this.offline_try = this.removeRep(this.allGoodsInfo,'g_underline');
+      },
+      //选项改变时获取值
+
+    },
+    //立即调用
+    created:function() {
+      this.allRemoveRep();
+    },
   }
 </script>
 
@@ -232,8 +136,9 @@
   #optionNav{
     width: 100%;
     height: 50px;
-    background-color: @bggrey;
     text-align: center;
+    background-color:@bggrey;
+    /*margin-top:54px;*/
   }
   /*各个选项公共样式*/
   .isOption{

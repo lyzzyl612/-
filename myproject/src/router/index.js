@@ -15,6 +15,15 @@ import goodsList from '@/views/goodsList'
 import Personal  from "@/views/pagePpersonal.vue"
 import login  from "@/views/log_reg.vue"
 import aboutus  from "@/views/aboutus.vue"
+import onlineTryon  from "@/views/try.vue"   //线上试戴
+//import goodsList  from "@/views/goodsList.vue"
+import ManSun  from "@/views/goodsList.vue"
+import WomanSun  from "@/views/goodsList.vue"
+import AllSun  from "@/views/goodsList.vue"
+import Cart  from "@/views/Cart.vue"
+import buy  from "@/views/lyzBuy.vue" //购买
+import StreetBeatDetails from '@/views/StreetBeatDetails.vue'
+import storyTitle from '@/views/storyTitle.vue'
 
 
 
@@ -39,6 +48,7 @@ import pageMyReview from '@/components/personalPage/pageMyReview'
 
 
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -46,7 +56,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect:"/Personal"
+      redirect:"/index"
     },
     {
       path: '/login',
@@ -65,9 +75,33 @@ export default new Router({
           component: index
         },
         {
+          path: 'onlineTryon',  //线上试戴
+          name: 'onlineTryon',
+          component: onlineTryon
+        },
+        {
+          path: 'StreetBeatDetails',  //街拍详情
+          name: 'StreetBeatDetails',
+          component: StreetBeatDetails
+        },{
+          path: 'storyTitle',  //故事详情
+          name: 'storyTitle',
+          component: storyTitle
+        },
+{
+          path: 'Cart',  //购物车
+          name: 'Cart',
+          component: Cart
+        },
+
+        {
           path: 'contact',  //联系我们
           name: 'contact',
           component: contact
+        },{
+          path: 'buy',  //购买
+          name: 'buy',
+          component: buy
         },
         {
           path: 'aboutus',  //关于我们
@@ -84,6 +118,24 @@ export default new Router({
           path: 'OfflineTryon',  //线下试戴说明
           name: 'OfflineTryon',
           component: OfflineTryon
+        },
+        //{
+        //  path: 'goodsList',  //商城列表
+        //  name: 'goodsList',
+        //  component: goodsList
+        //},
+        {
+          path: 'ManSun',  //商城男士太阳镜
+          name: 'ManSun',
+          component: ManSun
+        }, {
+          path: 'WomanSun',  //商城女士太阳镜
+          name: 'WomanSun',
+          component: WomanSun
+        }, {
+          path: 'AllSun',  //商城所有太阳镜
+          name: 'AllSun',
+          component: AllSun
         },
         /*{
          path: 'sunMam',  //太阳镜男士
@@ -127,7 +179,7 @@ export default new Router({
           component: Personal,
           children:[
             {
-              path: 'Personal',
+              path: '/Personal',
               name: 'Order',
               //alias:'/Personal/Order',
               component: Order

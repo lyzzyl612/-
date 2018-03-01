@@ -7,7 +7,7 @@
     </div>
     <div class="content" >
       <div class="brandbag" v-for="item in brandSty" v-if="item.s_img">
-        <router-link :to="'/StreetBeatDetails/'+item.b_id">
+        <router-link :to="'/storyTitle/'+item.b_id">
           <brandModule  :brandObj="item"></brandModule>
         </router-link>
       </div>

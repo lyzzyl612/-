@@ -14,11 +14,11 @@
         <ul class="sub">
           <li>
             光学镜
-            <subUl class="subUL" man='男士' woman='女士' all='所有' :firstImg="firstImg" :secondImg="secondImg" :thirdImg="thirdImg" :one="oneGlass" :two="twoGlass" :three="threeGlass"></subUl>
+            <subUl class="subUL" man='男士' woman='女士' all='所有' :firstImg="firstImg" :secondImg="secondImg" :thirdImg="thirdImg" :one="oneGlass" :two="twoGlass" :three="threeGlass" subText1="ManSun" subText2="WomanSun" subText3="AllSun"></subUl>
           </li>
           <li>
             太阳镜
-            <subUl class="subUL"  man='男士' woman='女士' all='所有' :firstImg="firstImgSun" :secondImg="secondImgSun" :thirdImg="thirdImgSun" :one="sunGlass1" :two="sunGlass2" :three="sunGlass3"></subUl>
+            <subUl class="subUL"  man='男士' woman='女士' all='所有' :firstImg="firstImgSun" :secondImg="secondImgSun" :thirdImg="thirdImgSun" :one="sunGlass1" :two="sunGlass2" :three="sunGlass3" subText1="ManSun" subText2="WomanSun" subText3="AllSun"></subUl>
           </li>
           <li>
             眼镜试戴
@@ -42,12 +42,15 @@
           </li>
           <div v-if=!name><router-link to="/login"><li>登录/注册</li></router-link></div>
           <div v-else><router-link  to="/Personal"><li><span class="loginName">{{name}}</span> <router-link to="/login"><span class="fa fa-mail-reply exit" title="退出登录" @click="clearName"></span></router-link></li></router-link></div>
-          <li>
+          <router-link to="/personal/pageMyCollect?pname=> 我的收藏"><li>
             <span class="fa fa-heart-o"></span>
           </li>
+          </router-link>
+          <router-link to="/Cart">
           <li>
             <span class="fa fa-shopping-bag"></span>
           </li>
+          </router-link>
         </ul>
       </nav>
   </div>
@@ -104,7 +107,7 @@
         a.style.width="64px";
       },
       clearName:function(){
-        localStorage.removeItem('userName');
+        sessionStorage.removeItem('userName');
         localStorage.removeItem('userId');
       }
     }

@@ -19,7 +19,6 @@
       return {}
     },
     props:[
-//      'theme','Des1','Des2','Des3','pImg'
       'popularScienceObj'
     ]
   }
@@ -31,7 +30,8 @@
     height: 450px;
     background-color: @bgwhite;
     position: relative;
-    left: 0;top: 54px;
+    left: 0;
+    /*top: 54px;*/
   }
   #box div{
     float: left;

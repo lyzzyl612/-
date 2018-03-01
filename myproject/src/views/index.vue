@@ -14,7 +14,7 @@
           <p id="online2" class="perP left perfect">perfect compatibiity</p>
           <p id="online3" class="perH2 left perfect">等待追求完美的你</p>
           <div id="btnonline" class="left perfect" >
-            <whiteMiddle text="即刻试戴"></whiteMiddle>
+            <router-link to="/onlineTryon"><whiteMiddle text="即刻试戴"></whiteMiddle></router-link>
           </div>
         </div>
           <!--<img src="../assets/images/index/2.jpg" alt=""/>-->

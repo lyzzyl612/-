@@ -3,7 +3,7 @@
     <div class="myCollect-content">
       <div class="myCollect-del" :sid=myCollectData.c_id @click="DelMyCollect()">X</div>
       <div class="myCollect-divImg">
-        <img :src=myCollectData.g_src>
+        <img :src="'/cms'+myCollectData.g_src">
       </div>
       <p>款式：{{myCollectData.g_name}}</p>
       <p>价格：￥<b>{{myCollectData.g_saleprice}}</b></p>
@@ -59,7 +59,7 @@
   @import "../../assets/css/common.less";
 
   .myCollect-content{
-    width: 41%;
+    width: 40%;
     box-shadow: @clzBorder;
     font-size: @mainfontsize;
     border-top: 1px rgba(0, 0, 0, 0.06) solid;

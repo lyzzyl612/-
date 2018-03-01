@@ -20,7 +20,8 @@ function starShowList() {
 //获取品牌资讯数据
 function brandNew(id) {
     return new Promise(function (resolve, reject) {
-        let sql = "SELECT * FROM brand RIGHT JOIN company ON brand.c_id=company.c_id where 1=1 ";
+        //let sql = "SELECT * FROM brand RIGHT JOIN company ON brand.c_id=company.c_id where 1=1 ";
+        let sql = "select * from brand as b right join story as s on b.b_id = s.b_id where 1=1 ";
         if (id){
             sql+="and b_id=?"
         }else {

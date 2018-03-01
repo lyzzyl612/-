@@ -5,6 +5,32 @@
 const storeModal = require("../modal/storeModal.js");
 let id=1;
 module.exports={
+    getStore:function(req,res){
+    let g_id=req.body.g_id;
+    console.log("11111111111111366666666666666666666666");
+    console.log(g_id);
+    storeModal.getAllstore([g_id]).then(function(data){
+        res.send({code:200,data:data});
+        console.log(data);
+    }).catch(function(err){
+        console.log(err);
+        res.send({code:500});
+    });
+},
+    buybuy:function(req,res){
+        let g_id=req.body.g_id;
+        let u_id=req.body.u_id;
+
+        storeModal.tobuy([g_id,u_id]).then(function(data){
+            res.send({code:200,data:data});
+            console.log(data);
+        }).catch(function(err){
+            console.log(err);
+            res.send({code:500});
+        });
+},
+
+
     //获取收货地址数据
     address:function(req,res){
         var userid=req.body.uid;

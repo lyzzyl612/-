@@ -5,15 +5,62 @@ const fs=require("fs");
 const path = require("path");
 const tryModal = require("../modal/tryModal.js");
 
+//收藏
+function coll(resquest, response) {
+    var userId = resquest.body.userId;
+    var goodsId = resquest.body.goodsId;
+    tryModal.coll(userId,goodsId).then(function(data){
+
+        response.send(data);
+    }).catch(function (err) {
+        response.send(err);
+    })
+}
+
+//获取穿过来id的商品
+function getChoise(resquest, response) {
+    var par = resquest.body;
+    tryModal.getChoisem(par).then(function(data){
+
+        response.send(data);
+    }).catch(function (err) {
+        response.send(err);
+    })
+}
+//获取品牌总数
+function brandTotol(resquest, response) {
+
+    tryModal.getbrandnum().then(function(data){
+
+        response.send(data);
+    }).catch(function (err) {
+        response.send(err);
+    })
+}
+//获取查询到商品总数
+function glassTotol(resquest, response) {
+    var brand = resquest.body.brand;
+    tryModal.getglassnum(brand).then(function(data){
+
+        response.send(data);
+    }).catch(function (err) {
+        response.send(err);
+    })
+}
+
 //点击“选择品牌”获取数据
 function list(request,response){
+    let pagesize1 = request.body.logopagesize;
+    let pagenum1 = request.body.logopagenum;
+    // let pagesize2 = request.body.gpagesize;
+    // let pagenum2 = request.body.gpagenum;
     var brand;//品牌信息
     var frame;//框型信息
     var material;//材质信息
     var style;//风格信息
     var glasses;//眼镜信息
     var color//眼镜颜色
-    tryModal.listBrand().then(function(data){
+    tryModal.listBrand(pagesize1,pagenum1).then(function(data){
         brand=data;
     }).then(function(){
         tryModal.frame().then(function(data){
@@ -37,7 +84,7 @@ function list(request,response){
             response.send({brand:brand,frame:frame,material:material,style:style,color:color,glasses:glasses});
         })
     }).catch(function (err) {
-        response.send({code: 500})
+        response.send(err)
     })
 }
 
@@ -88,20 +135,30 @@ function chooseGlasses(resquest, response) {
 }
 
 //=====================试戴筛选===========================================================================
+// function screen(request,response){
+//     var brand=request.body.brand;//需要传入参数的b_id                 品牌
+//     var sex=request.body.sex;// 需要出入参数 0 ，1                      性别
+//     var style=request.body.style;// 需要出入参数 字典表dict_id         风格
+//     var material=request.body.material;// 需要出入参数 字典表dict_id   材质
+//     var frame=request.body.frame;// 需要出入参数 字典表dict_id         框型
+//     var type=request.body.type;//需要传入参数   0，1                    太阳镜或者眼镜
+//     tryModal.screen(brand,sex,style,material,frame,type).then(function(data){
+//         response.send(data);
+//     }).catch(function(err){
+//         response.send({code: 500})
+//     })
+// }
 function screen(request,response){
+    let pagesize2 = request.body.gpagesize1;
+    let pagenum2 = request.body.gpagenum1;
     var brand=request.body.brand;//需要传入参数的b_id                 品牌
-    var sex=request.body.sex;// 需要出入参数 0 ，1                      性别
-    var style=request.body.style;// 需要出入参数 字典表dict_id         风格
-    var material=request.body.material;// 需要出入参数 字典表dict_id   材质
-    var frame=request.body.frame;// 需要出入参数 字典表dict_id         框型
-    var type=request.body.type;//需要传入参数   0，1                    太阳镜或者眼镜
-    tryModal.screen(brand,sex,style,material,frame,type).then(function(data){
+    brand= parseInt(brand);
+    tryModal.screen(pagesize2,pagenum2,brand).then(function(data){
         response.send(data);
     }).catch(function(err){
         response.send({code: 500})
     })
 }
-
 
 //===============试戴预览================================================================
 //上传头像
@@ -124,5 +181,9 @@ module.exports = {
     chooseGlasses,
     screen,
     uploadImage,
-    list
+    list,
+    brandTotol,
+    glassTotol,
+    getChoise,
+    coll
 };

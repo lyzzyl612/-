@@ -20,6 +20,9 @@ const customerRoute = require("./router/perCusRoute.js");    //售后
 const TryRoute=require("./router/tryRoute.js");  //试戴
 const newRoute=require("./router/newRoute.js");  // 潮流资讯
 const orderlistRoute=require("./router/orderlistRoute.js"); //订单
+const goodsRoute=require("./router/goodsRoute.js");//商城
+const cartRoute=require("./router/cartRoute.js");//商城
+
 
 const storeRoute =require ("./router/storeRoute.js");  // 支付页面获取收货地址
 const app = myexpress();
@@ -83,6 +86,8 @@ app.use("/cus",customerRoute);
 app.use("/try",TryRoute);//试戴
 app.use("/new",newRoute);//潮流资讯
 app.use("/order",orderlistRoute);
+app.use("/goods",goodsRoute);//商城
+app.use("/cart",cartRoute);//商城
 
 
 //=================================发送短信===============================

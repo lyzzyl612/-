@@ -5,7 +5,34 @@
 const pool = require("./dbHelp.js");
 
 module.exports={
-    //支付页面获取地址表数据
+    getAllstore:function([g_id]){
+    return new Promise(function (resolve, reject) {
+        let sql = `SELECT *,(SELECT d.dictdata_name FROM dictionary AS d WHERE d.dict_id=g.g_style) AS 'style',
+        (SELECT d.dictdata_name FROM dictionary AS d WHERE d.dict_id=g.g_material) AS 'material',
+        (SELECT d.dictdata_name FROM dictionary AS d WHERE d.dict_id=g.g_frame) AS 'frame',
+        (SELECT GROUP_CONCAT(d.dictdata_name)
+        FROM dictionary AS d WHERE  LOCATE(CONCAT(',',d.dict_id,','), g.g_color)>0) AS color
+        FROM brand_img AS b RIGHT JOIN goods AS g ON b.b_id=g.b_id WHERE g.g_id=? ORDER BY g.g_id`;
+
+        pool.query(sql,[g_id]).then(function(data){
+            resolve(data);
+        }).catch(function(err){
+            reject(err);
+        });
+    });
+},
+tobuy:function([g_id,u_id]){
+    return new Promise(function (resolve, reject) {
+        let sql = `INSERT INTO shopping_cart VALUES(NULL,?,?,1,NOW(),1);`;
+        pool.query(sql,[g_id,u_id]).then(function(data){
+            resolve(data);
+        }).catch(function(err){
+            reject(err);
+        });
+    });
+},
+
+//支付页面获取地址表数据
     address:function(userid) {
         return new Promise(function (resolve, reject) {
             let sql = "SELECT * FROM address where a_u_id=?";
